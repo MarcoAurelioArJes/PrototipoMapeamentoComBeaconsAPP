@@ -1,3 +1,5 @@
+using PrototipoMapeamentoAPP.Configuracao;
+
 namespace PrototipoMapeamentoAPP;
 
 public partial class PaginaPrincipal : ContentPage

@@ -1,4 +1,6 @@
-﻿namespace PrototipoMapeamentoAPP
+﻿using PrototipoMapeamentoAPP.Configuracao;
+
+namespace PrototipoMapeamentoAPP
 {
     public class MapaDrawable : IDrawable
     {

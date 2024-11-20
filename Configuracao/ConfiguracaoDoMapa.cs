@@ -1,4 +1,4 @@
-﻿namespace PrototipoMapeamentoAPP
+﻿namespace PrototipoMapeamentoAPP.Configuracao
 {
     public static class ConfiguracaoDoMapa
     {
