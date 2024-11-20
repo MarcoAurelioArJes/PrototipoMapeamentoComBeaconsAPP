@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrototipoMapeamentoAPP.PaginaPrincipal"
+             Title="PaginaPrincipal">
+    <VerticalStackLayout>
+        <!--<SearchBar x:Name="searchBar"
+                       Placeholder="Digite para buscar..."
+                       SearchButtonPressed="OnSearchButtonPressed"
+                       TextChanged="OnSearchTextChanged" />-->
+
+        <!--<ListView x:Name="listView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
+        
+        <Entry x:Name="PosicaoX"
+               Placeholder="Digite a posição X"
+               Keyboard="Numeric" />
+
+        <Entry x:Name="PosicaoY"
+               Placeholder="Digite a posição Y"
+               Keyboard="Numeric" />
+
+        <Button Text="Atualizar Posição do Usuário"
+                Clicked="AoClicarEmAtualizarPosicaoDoUsuario" />
+        <GraphicsView x:Name="canvasView" HeightRequest="800" WidthRequest="400"/>
+    </VerticalStackLayout>
+</ContentPage>
