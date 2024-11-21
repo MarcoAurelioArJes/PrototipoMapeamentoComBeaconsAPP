@@ -2,6 +2,7 @@
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.EventArgs;
 using PrototipoMapeamentoAPP.Configuracao;
+using PrototipoMapeamentoAPP.Mocks;
 
 namespace PrototipoMapeamentoAPP.Services
 {
@@ -41,42 +42,64 @@ namespace PrototipoMapeamentoAPP.Services
             }
         }
 
+        private static int count = 0;
+
         public async Task AtualizarInformacoesDosBeacons()
         {
-            if (_bluetoothLE.State == BluetoothState.On)
+            var mock = true;
+            if (mock)
             {
-                var status = await Permissions.RequestAsync<Permissions.Bluetooth>();
-                if (status == PermissionStatus.Granted)
+                if (count == 3)
+                    count = 0;
+
+                count++;
+                foreach (var beaconMock in MockDevice.GetMockDevices())
                 {
-                    if (_beacons.Count > 0)
+                    var beacon = ConfiguracaoBeacon.BeaconsConhecidos.FirstOrDefault(b => b.UUID == beaconMock.Id.ToString());
+                    if (beacon != null)
                     {
-                        foreach (var device in _beacons)
-                        {
-                            await device.UpdateRssiAsync();
-                            
-                            var beacon = ConfiguracaoBeacon.BeaconsConhecidos.FirstOrDefault(b => b.UUID == device.Id.ToString());
-                            if (beacon != null)
-                            {
-                                beacon.RSSIAtual = device.Rssi;
-                                beacon.AdicionarRSSIAtual(beacon.RSSIAtual);
-                            }
-
-                            continue;
-                        }
-
-                        return;
+                        beacon.RSSIAtual = beaconMock.ReadRssiAsync(count);
+                        beacon.AdicionarRSSIAtual(beacon.RSSIAtual);
                     }
-
-                    await _adapter.StartScanningForDevicesAsync();
-                    foreach (var device in _beacons)
-                    {
-                        await _adapter.ConnectToDeviceAsync(device);
-                    }
-                }
+                };
             }
             else
             {
-                throw new Exception("O Bluetooth está desligado.");
+                if (_bluetoothLE.State == BluetoothState.On)
+                {
+                    var status = await Permissions.RequestAsync<Permissions.Bluetooth>();
+                    if (status == PermissionStatus.Granted)
+                    {
+                        if (_beacons.Count > 0)
+                        {
+                            foreach (var device in _beacons)
+                            {
+                                await device.UpdateRssiAsync();
+
+                                var beacon = ConfiguracaoBeacon.BeaconsConhecidos.FirstOrDefault(b => b.UUID == device.Id.ToString());
+                                if (beacon != null)
+                                {
+                                    beacon.RSSIAtual = device.Rssi;
+                                    beacon.AdicionarRSSIAtual(beacon.RSSIAtual);
+                                }
+
+                                continue;
+                            }
+
+                            return;
+                        }
+
+                        await _adapter.StartScanningForDevicesAsync();
+                        foreach (var device in _beacons)
+                        {
+                            await _adapter.ConnectToDeviceAsync(device);
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("O Bluetooth está desligado.");
+                }
             }
         }
 
