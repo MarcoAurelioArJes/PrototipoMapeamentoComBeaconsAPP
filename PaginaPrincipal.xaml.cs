@@ -46,6 +46,8 @@ public partial class PaginaPrincipal : ContentPage
         ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoDoUsuario1.X;
         ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoDoUsuario1.Y;
 
+        Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
+
         MainThread.BeginInvokeOnMainThread(() =>
         {
             canvasView.Invalidate();
