@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using PrototipoMapeamentoAPP.Model;
+using PrototipoMapeamentoAPP.Configuracao;
 
 namespace PrototipoMapeamentoAPP.Services
 {
@@ -15,9 +16,8 @@ namespace PrototipoMapeamentoAPP.Services
             _mapa = mapa;
         }
 
-        public List<No> EncontrarCaminho(No inicio, No destino)
+        public List<(float X, float Y)> EncontrarCaminho(No inicio, No destino)
         {
-            //var caminho = new List<No>();
             var nosInexplorados = new PriorityQueue<No, double>();
             var nosExplorados = new HashSet<No>();
 
@@ -29,7 +29,6 @@ namespace PrototipoMapeamentoAPP.Services
             {
                 var noAtual = nosInexplorados.Dequeue();
 
-                //if (noAtual.X == destino.X && noAtual.Y == destino.Y)
                 if (noAtual == destino)
                     return ReconstruirCaminho(destino);
 
@@ -38,11 +37,9 @@ namespace PrototipoMapeamentoAPP.Services
 
                 foreach (var vizinho in ObterVizinhos(noAtual))
                 {
-                    //if (nosExplorados.Contains(vizinho) || !vizinho.PodeAndar)
                     if (nosExplorados.Contains(vizinho))
                         continue;
 
-                    //if (!nosInexplorados.Contains(vizinho) || CustoCaminhoAteVizinho < vizinho.CustoCaminhoAtual)
                     if (CustoCaminhoAteVizinho < vizinho.CustoCaminhoAtual)
                     {
                         vizinho.CustoCaminhoAtual = CustoCaminhoAteVizinho;
@@ -50,12 +47,6 @@ namespace PrototipoMapeamentoAPP.Services
                         vizinho.Pai = noAtual;
 
                         nosInexplorados.Enqueue(vizinho, vizinho.CustoTotal);
-
-                        //if (!nosInexplorados.Contains(vizinho))
-                        //    nosInexplorados.Add(vizinho);
-
-
-                        //nosInexplorados.Add(vizinho.CustoTotal, vizinho);
                     }
                 }
             }
@@ -63,7 +54,7 @@ namespace PrototipoMapeamentoAPP.Services
             return null;
         }
 
-        public List<No> EncontrarCaminho2(No inicio, No destino)
+        public List<(float X, float Y)> EncontrarCaminho2(No inicio, No destino)
         {
             var nosInexplorados = new List<No> { inicio };
             var nosExplorados = new HashSet<No>();
@@ -105,13 +96,14 @@ namespace PrototipoMapeamentoAPP.Services
             return null;
         }
 
-        private List<No> ReconstruirCaminho(No noAtual)
+        private List<(float X, float Y)> ReconstruirCaminho(No noAtual)
         {
-            var caminho = new List<No>();
+            var caminho = new List<(float X, float Y)>();
 
             while (noAtual != null)
             {
-                caminho.Add(noAtual);
+                caminho.Add((noAtual.X * ConfiguracaoDoMapa.DivisorPixelParaMatriz, 
+                            noAtual.Y * ConfiguracaoDoMapa.DivisorPixelParaMatriz));
                 noAtual = noAtual.Pai;
             }
 

@@ -55,17 +55,5 @@ namespace PrototipoMapeamentoAPP.Model
                 }
             }
         }
-
-        public void ExibirMapa()
-        {
-            for (int y = 0; y < AlturaMapa; y++)
-            {
-                for (int x = 0; x < LarguraMapa; x++)
-                {
-                    Trace.WriteLine(Nos[x, y].PodeAndar ? "C " : "O ");
-                }
-                Trace.WriteLine("");
-            }
-        }
     }
 }
