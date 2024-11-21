@@ -8,8 +8,8 @@ namespace PrototipoMapeamentoAPP;
 public partial class PaginaPrincipal : ContentPage
 {
     //private List<string> items;
-    private Mapa _mapa;
-    private AEstrelaService aEstrelaService;
+    private readonly Mapa _mapa;
+    private readonly AEstrelaService _aEstrelaService;
     private readonly BeaconService _beaconService;
     private Task _iniciarEscaneamento;
     public PaginaPrincipal()
@@ -19,7 +19,7 @@ public partial class PaginaPrincipal : ContentPage
         canvasView.Drawable = new MapaDrawable();
 
         _mapa = new Mapa();
-        aEstrelaService = new AEstrelaService(_mapa);
+        _aEstrelaService = new AEstrelaService(_mapa);
         _beaconService = new BeaconService();
     }
 
@@ -76,7 +76,7 @@ public partial class PaginaPrincipal : ContentPage
             _mapa.ValidarPosicao(posicaoDoUsuarioAEstrela.X, posicaoDoUsuarioAEstrela.Y) && _mapa.ValidarPosicao(destino.X, destino.Y))
         {
             //var caminho = aEstrelaService.EncontrarCaminho(posicaoDoUsuarioAEstrela, destino);
-            var caminho = aEstrelaService.EncontrarCaminho2(posicaoDoUsuarioAEstrela, destino);
+            var caminho = _aEstrelaService.EncontrarCaminho2(posicaoDoUsuarioAEstrela, destino);
 
             if (caminho != null)
             {
