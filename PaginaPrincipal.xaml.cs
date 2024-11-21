@@ -52,12 +52,12 @@ public partial class PaginaPrincipal : ContentPage
         var beaconsProximos = ConfiguracaoBeacon.BeaconsConhecidos.OrderBy(c => c.Distancia).ToList();
         var posicaoUsuarioCalculado = Trilaterate(beaconsProximos[0], beaconsProximos[1], beaconsProximos[2]);
 
-        //ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoUsuarioCalculado.Value.X;
-        //ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoUsuarioCalculado.Value.Y;
+        ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoUsuarioCalculado.Value.X;
+        ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoUsuarioCalculado.Value.Y;
 
-        Random random = new Random();
-        ConfiguracaoDoMapa.PosicaoDoUsuarioX = 0 + (float)random.NextDouble() * (200 - 0);
-        ConfiguracaoDoMapa.PosicaoDoUsuarioY = 0 + (float)random.NextDouble() * (400 - 0);
+        //Random random = new Random();
+        //ConfiguracaoDoMapa.PosicaoDoUsuarioX = 0 + (float)random.NextDouble() * (200 - 0);
+        //ConfiguracaoDoMapa.PosicaoDoUsuarioY = 0 + (float)random.NextDouble() * (400 - 0);
 
         Debug.WriteLine($"BeaconTAG: {beaconsProximos[0].BeaconTAG} RSSI: {beaconsProximos[0].RSSIAtual} DISTANCIA: {beaconsProximos[0].Distancia}");
         Debug.WriteLine($"BeaconTAG: {beaconsProximos[1].BeaconTAG} RSSI: {beaconsProximos[1].RSSIAtual} DISTANCIA: {beaconsProximos[1].Distancia}");
@@ -111,5 +111,10 @@ public partial class PaginaPrincipal : ContentPage
 
 
         return new Point(x, y);
+    }
+
+    private async void AbrirTelaDeCadastro(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PaginaCadastro());
     }
 }
