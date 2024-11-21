@@ -97,11 +97,11 @@ namespace PrototipoMapeamentoAPP.Mocks
 
         public static List<MockDevice> GetMockDevices()
         {
-            var beaconA = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_A, new List<int> { -80, -90, -85, -90 });
-            var beaconB = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_B, new List<int> { -80, -90, -85, -90 });
-            var beaconC = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_C, new List<int> { -70, -72, -65, -60 });
-            var beaconD = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_D, new List<int> { -50, -55, -60, -65 });
-            var beaconE = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_E, new List<int> { -45, -47, -49, -50 });
+            var beaconA = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_A, new List<int> { -80, -80, -75, -70, -65, -60, -55, -50, -50, -50, -55, -60, -65, -70, -75, -80, -85, -90, -90, -90, -90, -90, -90, -90, -90, -90 });
+            var beaconB = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_B, new List<int> { -80, -80, -75, -70, -65, -60, -55, -50, -50, -50, -55, -60, -65, -70, -75, -80, -85, -90, -90, -90, -90, -90, -90, -90, -90, -90 });
+            var beaconC = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_C, new List<int> { -70, -72, -70, -68, -66, -64, -62, -60, -58, -56, -55, -54, -53, -52, -51, -50, -50, -50, -50, -50, -50, -50, -50, -50, -50, -50 });
+            var beaconD = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_D, new List<int> { -45, -50, -55, -60, -65, -65, -70, -75, -80, -85, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90 });
+            var beaconE = new MockDevice(ConfiguracaoBeacon.UUID_BEACON_E, new List<int> { -45, -45, -50, -55, -60, -65, -70, -75, -80, -85, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90, -90 });
 
             return new List<MockDevice> { beaconA, beaconB, beaconC, beaconD, beaconE };
         }

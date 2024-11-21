@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 namespace PrototipoMapeamentoAPP;
 public partial class PaginaPrincipal : ContentPage
 {
-    //private List<string> items;
+    
     private readonly Mapa _mapa;
     private readonly AEstrelaService _aEstrelaService;
     private readonly BeaconService _beaconService;
@@ -64,14 +64,14 @@ public partial class PaginaPrincipal : ContentPage
 
             AtualizarPosicaoDoUsuario();
 
-            await Task.Delay(1000);
+            await Task.Delay(2000);
         }
     }
 
     private void AtualizarPosicaoDoUsuario()
     {
-        var beaconsProximos = ConfiguracaoBeacon.BeaconsConhecidos.OrderBy(c => c.Distancia).ToList();
-        var posicaoUsuarioCalculado = Trilaterate(beaconsProximos[0], beaconsProximos[1], beaconsProximos[2]);
+        var beaconsProximos = ConfiguracaoBeacon.BeaconsConhecidos.OrderByDescending(c => c.RSSIAtual).ToList();
+        var posicaoUsuarioCalculado = AlgoritmoDeTrilateracao.Trilaterar(beaconsProximos);
 
         ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoUsuarioCalculado.Value.X;
         ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoUsuarioCalculado.Value.Y;
@@ -82,7 +82,7 @@ public partial class PaginaPrincipal : ContentPage
         Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
         Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
 
-        //A*
+        
         if (ConfiguracaoDoMapa.DestinoX != 0 || ConfiguracaoDoMapa.DestinoY != 0)
             EncontrarMelhorCaminho();
 
@@ -146,29 +146,6 @@ public partial class PaginaPrincipal : ContentPage
             DisplayAlert("Ponto de Interesse", $"Ponto de interesse não encontrado", "OK");
         }
     }
-    public static Point? Trilaterate(Beacon b1, Beacon b2, Beacon b3)
-    {
-        double x1 = b1.PosicaoNoMapa.X, y1 = b1.PosicaoNoMapa.Y;
-        double x2 = b2.PosicaoNoMapa.X, y2 = b2.PosicaoNoMapa.Y;
-        double x3 = b3.PosicaoNoMapa.X, y3 = b3.PosicaoNoMapa.Y;
-
-        double r1 = b1.Distancia;
-        double r2 = b2.Distancia;
-        double r3 = b3.Distancia;
-
-        double A = 2 * (x2 - x1);
-        double B = 2 * (y2 - y1);
-        double C = r1 * r1 - r2 * r2 - x1 * x1 - y1 * y1 + x2 * x2 + y2 * y2;
-        double D = 2 * (x3 - x2);
-        double E = 2 * (y3 - y2);
-        double F = r2 * r2 - r3 * r3 - x2 * x2 - y2 * y2 + x3 * x3 + y3 * y3;
-        double x = (C * E - F * B) / (E * A - B * D);
-        double y = (C * D - A * F) / (B * D - A * E);
-
-
-        return new Point(x, y);
-    }
-
     private async void AbrirTelaDeCadastro(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new PaginaCadastro());

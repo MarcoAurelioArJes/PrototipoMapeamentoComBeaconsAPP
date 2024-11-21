@@ -10,7 +10,7 @@ namespace PrototipoMapeamentoAPP.Model
         public (double X, double Y) PosicaoReal =>
             (ConfiguracaoDoMapa.ConverterPixelsParaMetrosX(PosicaoNoMapa.X),
             ConfiguracaoDoMapa.ConverterPixelsParaMetrosY(PosicaoNoMapa.Y));
-        public double Distancia => Math.Pow(10, (MediaRSSIPadrao - ObterMediaRSSIsAtuais()) / (10 * _fatorDePerdaDeSinal));
+        public double Distancia => Math.Pow(10, (-55.5 - ObterMediaRSSIsAtuais()) / (10 * _fatorDePerdaDeSinal));
         public int RSSIAtual { get; set; }
         public double MediaRSSIPadrao => ConfiguracaoBeacon.ObterConfiguracaoDoBeaconPorUUID(UUID).MediaRSSIPadrao;
         public int ADVInterval => ConfiguracaoBeacon.ObterConfiguracaoDoBeaconPorUUID(UUID).ADVInterval;
