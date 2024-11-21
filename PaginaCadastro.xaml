@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrototipoMapeamentoAPP.PaginaCadastro"
+             Title="PaginaCadastro">
+    <VerticalStackLayout>
+        <Entry x:Name="NomePonto" Placeholder="Nome do Ponto de Interesse"/>
+        <Entry x:Name="PosicaoX" Placeholder="Posição X no Mapa" Keyboard="Numeric"/>
+        <Entry x:Name="PosicaoY" Placeholder="Posição Y no Mapa" Keyboard="Numeric"/>
+
+        <Button Text="Salvar Ponto" Clicked="SalvarPonto"/>
+        <Button Text="Voltar" Clicked="VoltarTelaInicial"/>
+    </VerticalStackLayout>
+</ContentPage>

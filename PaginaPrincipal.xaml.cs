@@ -168,4 +168,9 @@ public partial class PaginaPrincipal : ContentPage
 
         return new Point(x, y);
     }
+
+    private async void AbrirTelaDeCadastro(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PaginaCadastro());
+    }
 }

@@ -19,5 +19,9 @@
         </ListView>
 
         <GraphicsView x:Name="canvasView" HeightRequest="800" WidthRequest="400"/>
+        <Button Text="Cadastrar Ponto de Interesse"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Clicked="AbrirTelaDeCadastro"/>
     </VerticalStackLayout>
 </ContentPage>
