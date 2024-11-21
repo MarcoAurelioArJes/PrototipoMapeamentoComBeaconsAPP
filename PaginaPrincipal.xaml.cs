@@ -1,14 +1,16 @@
 using PrototipoMapeamentoAPP.Model;
 using PrototipoMapeamentoAPP.Services;
 using System.Diagnostics;
+using PrototipoMapeamentoAPP.Configuracao;
+using PrototipoMapeamentoAPP.Services;
 
 namespace PrototipoMapeamentoAPP;
-
 public partial class PaginaPrincipal : ContentPage
 {
     //private List<string> items;
     private Mapa _mapa;
     private AEstrelaService aEstrelaService;
+    private readonly BeaconService _beaconService;
 
     public PaginaPrincipal()
     {
@@ -16,36 +18,34 @@ public partial class PaginaPrincipal : ContentPage
 
         canvasView.Drawable = new MapaDrawable();
 
-        //items  = new List<string>
-        //{
-        //        "Maçã"
-        //};
-
-        //listView.ItemsSource = items;
-
         _mapa = new Mapa();
         aEstrelaService = new AEstrelaService(_mapa);
+        _beaconService = new BeaconService();
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
 
-    //private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
-    //{
-    //    string searchText = e.NewTextValue?.ToLower() ?? string.Empty;
-    //    var filteredItems = items.Where(item => item.ToLower().Contains(searchText)).ToList();
-    //    listView.ItemsSource = filteredItems;
-    //}
+        await IniciarScan();
+    }
 
-    //private void OnSearchButtonPressed(object sender, EventArgs e)
-    //{
-    //    string searchText = searchBar.Text?.ToLower() ?? string.Empty;
-    //    var filteredItems = items.Where(item => item.ToLower().Contains(searchText)).ToList();
-    //    listView.ItemsSource = filteredItems;
-    //}
+    private async Task IniciarScan()
+    {
+        while (true)
+        {
+            await _beaconService.AtualizarInformacoesDosBeacons();
+        }
+    }
 
     private void AoClicarEmAtualizarPosicaoDoUsuario(object sender, EventArgs e)
     {
-        ConfiguracaoDoMapa.PosicaoDoUsuarioX = float.Parse(PosicaoX.Text);
-        ConfiguracaoDoMapa.PosicaoDoUsuarioY = float.Parse(PosicaoY.Text);
+
+        foreach(var beacon in ConfiguracaoBeacon.BeaconsConhecidos)
+        {
+            ConfiguracaoDoMapa.PosicaoDoUsuarioX = float.Parse(PosicaoX.Text);
+            ConfiguracaoDoMapa.PosicaoDoUsuarioY = float.Parse(PosicaoY.Text);
+        }
 
         //_mapa.ExibirMapa();
 

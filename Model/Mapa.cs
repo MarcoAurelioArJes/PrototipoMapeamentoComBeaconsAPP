@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using PrototipoMapeamentoAPP.Configuracao;
+using System.Diagnostics;
 
 namespace PrototipoMapeamentoAPP.Model
 {
