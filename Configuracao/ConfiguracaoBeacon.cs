@@ -11,7 +11,7 @@ namespace PrototipoMapeamentoAPP.Configuracao
         public const string UUID_BEACON_E = "00000000-0000-0000-0000-fcf76150aae3";
 
         //TXPOWER 4
-        private static Dictionary<string, (double TxPower, int ADVInterval)> ConfiguracaoTXPowerEm4 => new Dictionary<string, (double TxPower, int ADVInterval)>
+        private static Dictionary<string, (double MediaRSSIPadrao, int ADVInterval)> ConfiguracaoTXPowerEm4 => new Dictionary<string, (double MediaRSSIPadrao, int ADVInterval)>
         {
             { UUID_BEACON_A, new (-50, 500) },
             { UUID_BEACON_B, new (-58, 500) },
@@ -21,7 +21,7 @@ namespace PrototipoMapeamentoAPP.Configuracao
         };
 
         //TXPOWER 6
-        private static Dictionary<string, (double TxPower, int ADVInterval)> ConfiguracaoTXPowerEm6 => new Dictionary<string, (double TxPower, int ADVInterval)>
+        private static Dictionary<string, (double MediaRSSIPadrao, int ADVInterval)> ConfiguracaoTXPowerEm6 => new Dictionary<string, (double MediaRSSIPadrao, int ADVInterval)>
         {
             { UUID_BEACON_A, new (-44.5, 500) },
             { UUID_BEACON_B, new (-55.5, 500) },
@@ -29,13 +29,13 @@ namespace PrototipoMapeamentoAPP.Configuracao
             { UUID_BEACON_D, new (-52, 500) },
             { UUID_BEACON_E, new (-45, 500) }
         };
-        public static (double TxPower, int ADVInterval) ObterConfiguracaoDoBeaconPorUUID(string uuid)
+        public static (double MediaRSSIPadrao, int ADVInterval) ObterConfiguracaoDoBeaconPorUUID(string uuid)
         {
 
             if (!ConfiguracaoTXPowerEm6.TryGetValue(uuid, out var beacon))
                 throw new Exception($"Não existe UUID {uuid}");
 
-            return (beacon.TxPower, beacon.ADVInterval);
+            return (beacon.MediaRSSIPadrao, beacon.ADVInterval);
         }
 
         public static List<Beacon> BeaconsConhecidos { get; set; } = new List<Beacon>()

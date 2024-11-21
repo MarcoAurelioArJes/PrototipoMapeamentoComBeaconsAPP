@@ -1,10 +1,10 @@
 using PrototipoMapeamentoAPP.Configuracao;
+using PrototipoMapeamentoAPP.Services;
 
 namespace PrototipoMapeamentoAPP;
-
 public partial class PaginaPrincipal : ContentPage
 {
-    //private List<string> items;
+    private readonly BeaconService _beaconService;
 
     public PaginaPrincipal()
     {
@@ -12,32 +12,32 @@ public partial class PaginaPrincipal : ContentPage
 
         canvasView.Drawable = new MapaDrawable();
 
-        //items  = new List<string>
-        //{
-        //        "Maçã"
-        //};
-
-        //listView.ItemsSource = items;
+        _beaconService = new BeaconService();
     }
 
-    //private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
-    //{
-    //    string searchText = e.NewTextValue?.ToLower() ?? string.Empty;
-    //    var filteredItems = items.Where(item => item.ToLower().Contains(searchText)).ToList();
-    //    listView.ItemsSource = filteredItems;
-    //}
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
 
-    //private void OnSearchButtonPressed(object sender, EventArgs e)
-    //{
-    //    string searchText = searchBar.Text?.ToLower() ?? string.Empty;
-    //    var filteredItems = items.Where(item => item.ToLower().Contains(searchText)).ToList();
-    //    listView.ItemsSource = filteredItems;
-    //}
+        await IniciarScan();
+    }
+
+    private async Task IniciarScan()
+    {
+        while (true)
+        {
+            await _beaconService.AtualizarInformacoesDosBeacons();
+        }
+    }
 
     private void AoClicarEmAtualizarPosicaoDoUsuario(object sender, EventArgs e)
     {
-        ConfiguracaoDoMapa.PosicaoDoUsuarioX = float.Parse(PosicaoX.Text);
-        ConfiguracaoDoMapa.PosicaoDoUsuarioY = float.Parse(PosicaoY.Text);
+
+        foreach(var beacon in ConfiguracaoBeacon.BeaconsConhecidos)
+        {
+            ConfiguracaoDoMapa.PosicaoDoUsuarioX = float.Parse(PosicaoX.Text);
+            ConfiguracaoDoMapa.PosicaoDoUsuarioY = float.Parse(PosicaoY.Text);
+        }
 
         canvasView.Invalidate();
     }

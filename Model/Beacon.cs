@@ -6,20 +6,22 @@ namespace PrototipoMapeamentoAPP.Model
     {
         public string BeaconTAG { get; set; }
         public string UUID { get; set; }
-        public double Distancia => Math.Pow(10, (ObterMediaRSSIs() - RSSI) / (10 * _fatorDePerdaDeSinal));
-        public int RSSI { get; set; }
+        public Point Position { get; set; }
+        public double Distancia => Math.Pow(10, (MediaRSSIPadrao - ObterMediaRSSIsAtuais()) / (10 * _fatorDePerdaDeSinal));
+        public int RSSIAtual { get; set; }
+        public double MediaRSSIPadrao => ConfiguracaoBeacon.ObterConfiguracaoDoBeaconPorUUID(UUID).MediaRSSIPadrao;
         public int ADVInterval => ConfiguracaoBeacon.ObterConfiguracaoDoBeaconPorUUID(UUID).ADVInterval;
         
-        private List<int> _rssis = new List<int>();
+        private List<double> _rssis = new List<double>();
         private double _fatorDePerdaDeSinal = 2.0d;
 
-        public void AdicionarRSSI(int rssi)
+        public void AdicionarRSSIAtual(double rssi)
         {
             _rssis.Add(rssi);
-            if (_rssis.Count > 0) 
+            if (_rssis.Count > 60)
                 _rssis.RemoveRange(0, 59);
         }
 
-        private double ObterMediaRSSIs() => _rssis.Average();
+        public double ObterMediaRSSIsAtuais() => _rssis.Average();
     }
 }
