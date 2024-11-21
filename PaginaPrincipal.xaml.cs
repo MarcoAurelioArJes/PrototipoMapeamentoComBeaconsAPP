@@ -54,16 +54,26 @@ public partial class PaginaPrincipal : ContentPage
         });
 
         //_mapa.ExibirMapa();
+        _mapa.LimparMapa();
+        var posicaoDoUsuario = _mapa.Nos[(int)ConfiguracaoDoMapa.PosicaoDoUsuarioX, (int)ConfiguracaoDoMapa.PosicaoDoUsuarioY];
+        var destino = _mapa.Nos[8, 8];
 
-        var posicaoDoUsuario = new No((int)ConfiguracaoDoMapa.PosicaoDoUsuarioX, (int)ConfiguracaoDoMapa.PosicaoDoUsuarioY, true);
-        var destino = new No(10, 10, true);
-        var caminho = aEstrelaService.EncontrarCaminho(posicaoDoUsuario, destino);
-
-        for (int i = 0; i < caminho.Count; i++)
+        if (!_mapa.EstaDentroDoObstaculo(posicaoDoUsuario.X, posicaoDoUsuario.Y) && !_mapa.EstaDentroDoObstaculo(destino.X, destino.Y) &&
+            _mapa.ValidarPosicao(posicaoDoUsuario.X, posicaoDoUsuario.Y) && _mapa.ValidarPosicao(destino.X, destino.Y))
         {
-            var no = caminho[i];
-            Trace.WriteLine(no.PodeAndar ? "C" : "O");
+            var caminho = aEstrelaService.EncontrarCaminho(posicaoDoUsuario, destino);
+            //var caminho = aEstrelaService.EncontrarCaminho2(posicaoDoUsuario, destino);
+
+            if (caminho != null)
+            {
+                for (int i = 0; i < caminho.Count; i++)
+                {
+                    var no = caminho[i];
+                    Trace.WriteLine($"{no.X}, {no.Y}");
+                }
+            }
         }
+
 
         //if (caminho.Any())
         //{
