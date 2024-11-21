@@ -17,16 +17,6 @@
             </ListView.ItemTemplate>
         </ListView>-->
         
-        <Entry x:Name="PosicaoX"
-               Placeholder="Digite a posição X"
-               Keyboard="Numeric" />
-
-        <Entry x:Name="PosicaoY"
-               Placeholder="Digite a posição Y"
-               Keyboard="Numeric" />
-
-        <Button Text="Atualizar Posição do Usuário"
-                Clicked="AoClicarEmAtualizarPosicaoDoUsuario" />
         <GraphicsView x:Name="canvasView" HeightRequest="800" WidthRequest="400"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -6,7 +6,10 @@ namespace PrototipoMapeamentoAPP.Model
     {
         public string BeaconTAG { get; set; }
         public string UUID { get; set; }
-        public Point Position { get; set; }
+        public Point PosicaoNoMapa => ConfiguracaoBeacon.ObterConfiguracaoDoBeaconPorUUID(UUID).PosicaoNoMapa;
+        public (double X, double Y) PosicaoReal =>
+            (ConfiguracaoDoMapa.ConverterPixelsParaMetrosX(PosicaoNoMapa.X),
+            ConfiguracaoDoMapa.ConverterPixelsParaMetrosY(PosicaoNoMapa.Y));
         public double Distancia => Math.Pow(10, (MediaRSSIPadrao - ObterMediaRSSIsAtuais()) / (10 * _fatorDePerdaDeSinal));
         public int RSSIAtual { get; set; }
         public double MediaRSSIPadrao => ConfiguracaoBeacon.ObterConfiguracaoDoBeaconPorUUID(UUID).MediaRSSIPadrao;
@@ -22,6 +25,6 @@ namespace PrototipoMapeamentoAPP.Model
                 _rssis.RemoveRange(0, 59);
         }
 
-        public double ObterMediaRSSIsAtuais() => _rssis.Average();
+        public double ObterMediaRSSIsAtuais() => _rssis.Count > 0 ? _rssis.Average() : RSSIAtual;
     }
 }
