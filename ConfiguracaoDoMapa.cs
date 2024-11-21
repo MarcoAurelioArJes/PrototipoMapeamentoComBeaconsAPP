@@ -12,5 +12,7 @@
         public static float AlturaObstaculo => AlturaMapa / 2;
         public static float PosicaoXObstaculo => LarguraObstaculo / 2;
         public static float PosicaoYObstaculo => AlturaObstaculo / 2;
+
+        public static float DivisorPixelParaMatriz { get; set; } = 10;
     }
 }
