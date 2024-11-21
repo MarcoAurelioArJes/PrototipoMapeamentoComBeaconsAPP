@@ -2,6 +2,7 @@ using PrototipoMapeamentoAPP.Model;
 using PrototipoMapeamentoAPP.Services;
 using System.Diagnostics;
 using PrototipoMapeamentoAPP.Configuracao;
+using System;
 
 namespace PrototipoMapeamentoAPP;
 public partial class PaginaPrincipal : ContentPage
@@ -43,49 +44,37 @@ public partial class PaginaPrincipal : ContentPage
     {
         var posicaoDoUsuario1 = AlgoritmoDosMinimosQuadradosPonderados.EstimarPosicao(ConfiguracaoBeacon.BeaconsConhecidos);
 
-        ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoDoUsuario1.X;
-        ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoDoUsuario1.Y;
+        //ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoDoUsuario1.X;
+        //ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoDoUsuario1.Y;
+
+        Random random = new Random();
+        ConfiguracaoDoMapa.PosicaoDoUsuarioX = 0 + (float)random.NextDouble() * (200 - 0);
+        ConfiguracaoDoMapa.PosicaoDoUsuarioY = 0 + (float)random.NextDouble() * (400 - 0);
 
         Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
+
+        //A*
+        _mapa.LimparMapa();
+        var posicaoDoUsuarioAEstrela = _mapa.Nos[(int)(ConfiguracaoDoMapa.PosicaoDoUsuarioX / ConfiguracaoDoMapa.DivisorPixelParaMatriz),
+                                                (int)(ConfiguracaoDoMapa.PosicaoDoUsuarioY / ConfiguracaoDoMapa.DivisorPixelParaMatriz)];
+        //var posicaoDoUsuario = _mapa.Nos[2, 2];
+        var destino = _mapa.Nos[(int)ConfiguracaoDoMapa.DestinoX , (int)ConfiguracaoDoMapa.DestinoY];
+
+        if (!_mapa.EstaDentroDoObstaculo(posicaoDoUsuarioAEstrela.X, posicaoDoUsuarioAEstrela.Y) && !_mapa.EstaDentroDoObstaculo(destino.X, destino.Y) &&
+            _mapa.ValidarPosicao(posicaoDoUsuarioAEstrela.X, posicaoDoUsuarioAEstrela.Y) && _mapa.ValidarPosicao(destino.X, destino.Y))
+        {
+            //var caminho = aEstrelaService.EncontrarCaminho(posicaoDoUsuarioAEstrela, destino);
+            var caminho = aEstrelaService.EncontrarCaminho2(posicaoDoUsuarioAEstrela, destino);
+
+            if (caminho != null)
+            {
+                ConfiguracaoDoMapa.Caminho = caminho.Select(c => (c.X, c.Y)).ToList();
+            }
+        }
 
         MainThread.BeginInvokeOnMainThread(() =>
         {
             canvasView.Invalidate();
         });
-
-        //_mapa.ExibirMapa();
-        _mapa.LimparMapa();
-        var posicaoDoUsuario = _mapa.Nos[(int)ConfiguracaoDoMapa.PosicaoDoUsuarioX, (int)ConfiguracaoDoMapa.PosicaoDoUsuarioY];
-        var destino = _mapa.Nos[8, 8];
-
-        if (!_mapa.EstaDentroDoObstaculo(posicaoDoUsuario.X, posicaoDoUsuario.Y) && !_mapa.EstaDentroDoObstaculo(destino.X, destino.Y) &&
-            _mapa.ValidarPosicao(posicaoDoUsuario.X, posicaoDoUsuario.Y) && _mapa.ValidarPosicao(destino.X, destino.Y))
-        {
-            var caminho = aEstrelaService.EncontrarCaminho(posicaoDoUsuario, destino);
-            //var caminho = aEstrelaService.EncontrarCaminho2(posicaoDoUsuario, destino);
-
-            if (caminho != null)
-            {
-                for (int i = 0; i < caminho.Count; i++)
-                {
-                    var no = caminho[i];
-                    Trace.WriteLine($"{no.X}, {no.Y}");
-                }
-            }
-        }
-
-
-        //if (caminho.Any())
-        //{
-        //    // Obter o contexto de desenho
-        //    var drawable = canvasView.Drawable as MapaDrawable;
-
-        //    // Itera sobre cada nó no caminho encontrado
-        //    foreach (var no in caminho)
-        //    {
-        //        // Chama um método do MapaDrawable para desenhar o nó
-        //        drawable?.DesenharNo(no);
-        //    }
-        //}
     }
 }

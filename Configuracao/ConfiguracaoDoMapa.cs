@@ -31,5 +31,10 @@
         {
             return pixelsY * ResolucaoVertical;
         }
+
+        public static float DestinoX { get; set; } = 8f;
+        public static float DestinoY { get; set; } = 8f;
+
+        public static List<(float X, float Y)> Caminho { get; set; } = new List<(float, float)>();
     }
 }
