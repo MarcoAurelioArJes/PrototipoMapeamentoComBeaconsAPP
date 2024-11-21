@@ -31,5 +31,14 @@ namespace PrototipoMapeamentoAPP.Repository
                             .Where(c => texto == string.Empty || c.Nome.ToLower().Contains(texto))
                             .ToListAsync();
         }
+        public async Task Atualizar(PontoDeInteresse pontoDeInteresse)
+        {
+            await _database.UpdateAsync(pontoDeInteresse);
+        }
+
+        public async Task Excluir(PontoDeInteresse pontoDeInteresse)
+        {
+            await _database.DeleteAsync(pontoDeInteresse);
+        }
     }
 }
