@@ -16,7 +16,7 @@ namespace PrototipoMapeamentoAPP.Repository
 
         public void Seed()
         {
-            _database.InsertAllAsync(PontosDeInteresseSeed.PontosDeInteresses);
+            _database.InsertAllAsync(PontosDeInteresseSeed.PontosDeInteresses).Wait();
         }
 
         public void Criar(PontoDeInteresse pontoDeInteresse)
@@ -24,10 +24,10 @@ namespace PrototipoMapeamentoAPP.Repository
             _database.InsertAsync(pontoDeInteresse);
         }
 
-        public async Task<List<PontoDeInteresse>> ObterPorFiltro(string texto)
+        public Task<List<PontoDeInteresse>> ObterPorFiltro(string texto)
         {
             texto = texto.Trim().ToLower();
-            return await _database.Table<PontoDeInteresse>()
+            return _database.Table<PontoDeInteresse>()
                             .Where(c => texto == string.Empty || c.Nome.ToLower().Contains(texto))
                             .ToListAsync();
         }

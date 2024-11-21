@@ -55,5 +55,18 @@ namespace PrototipoMapeamentoAPP.Model
                 }
             }
         }
+
+        public (double X, double Y) ObterDestinoXY(double posicaoX, double posicaoY)
+        {
+            if (Math.Round(posicaoX, MidpointRounding.AwayFromZero) == LarguraMapa)
+                posicaoX = posicaoX - 1;
+            if (Math.Round(posicaoY, MidpointRounding.AwayFromZero) == AlturaMapa)
+                posicaoY = posicaoY - 1;
+
+            if (posicaoX > LarguraMapa || posicaoY > AlturaMapa)
+                throw new Exception("Não é possível alcançar o destino informado");
+
+            return (posicaoX, posicaoY);
+        }
     }
 }

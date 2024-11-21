@@ -1,4 +1,6 @@
-﻿namespace PrototipoMapeamentoAPP.Configuracao
+﻿using PrototipoMapeamentoAPP.Model;
+
+namespace PrototipoMapeamentoAPP.Configuracao
 {
     public static class ConfiguracaoDoMapa
     {
@@ -16,8 +18,10 @@
         public static float PosicaoXObstaculo => LarguraObstaculo / 2;
         public static float PosicaoYObstaculo => AlturaObstaculo / 2;
 
-        public static float LarguraReal = 25f;
-        public static float AlturaReal = 30f;
+        //public static float LarguraReal = 25f;
+        //public static float AlturaReal = 30f;
+        public static float LarguraReal = 20f;
+        public static float AlturaReal = 60f;
 
         public static float ResolucaoHorizontal => LarguraReal / LarguraMapa;
         public static float ResolucaoVertical => AlturaReal / AlturaMapa;
@@ -32,9 +36,21 @@
             return pixelsY * ResolucaoVertical;
         }
 
-        public static float DestinoX { get; set; } = 8f;
-        public static float DestinoY { get; set; } = 8f;
+        public static double ConverterMetrosParaPixelsX(double metrosX)
+        {
+            return metrosX / ResolucaoHorizontal;
+        }
+
+        public static double ConverterMetrosParaPixelsY(double metrosY)
+        {
+            return metrosY / ResolucaoVertical;
+        }
+
+        public static float DestinoX { get; set; } = 0;
+        public static float DestinoY { get; set; } = 0;
 
         public static List<(float X, float Y)> Caminho { get; set; } = new List<(float, float)>();
+
+        public static List<PontoDeInteresse> PontosDeInteresse { get; set; } = new List<PontoDeInteresse>();
     }
 }

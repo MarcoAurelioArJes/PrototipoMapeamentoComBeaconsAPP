@@ -1,4 +1,6 @@
-﻿using PrototipoMapeamentoAPP.Configuracao;
+﻿using Microsoft.Maui.Graphics.Text;
+using PrototipoMapeamentoAPP.Configuracao;
+using PrototipoMapeamentoAPP.Mocks;
 
 namespace PrototipoMapeamentoAPP
 {
@@ -20,6 +22,34 @@ namespace PrototipoMapeamentoAPP
 
             canvas.FillColor = Colors.Red;
             canvas.FillCircle(ConfiguracaoDoMapa.PosicaoDoUsuarioX, ConfiguracaoDoMapa.PosicaoDoUsuarioY, 10);
+
+
+            if (ConfiguracaoDoMapa.PontosDeInteresse.Count > 0)
+            {
+                foreach (var pontoDeInteresse in ConfiguracaoDoMapa.PontosDeInteresse)
+                {
+                    canvas.FillColor = Colors.DeepPink;
+                    float posicaoX = (float)ConfiguracaoDoMapa.ConverterMetrosParaPixelsX(pontoDeInteresse.PosicaoRealX);
+                    float posicaoY = (float)ConfiguracaoDoMapa.ConverterMetrosParaPixelsY(pontoDeInteresse.PosicaoRealY);
+
+                    HorizontalAlignment posicaoTexto = posicaoX == 0 ? HorizontalAlignment.Left : HorizontalAlignment.Right;
+                    canvas.DrawString(pontoDeInteresse.Nome, posicaoX, posicaoY, posicaoTexto);
+                    canvas.FillCircle(posicaoX, posicaoY, 10);
+                }
+            }
+            else
+            {
+                foreach (var pontoDeInteresse in PontosDeInteresseMock.ObterPontosDeInteresse())
+                {
+                    canvas.FillColor = Colors.DeepPink;
+                    float posicaoX = (float)ConfiguracaoDoMapa.ConverterMetrosParaPixelsX(pontoDeInteresse.PosicaoRealX);
+                    float posicaoY = (float)ConfiguracaoDoMapa.ConverterMetrosParaPixelsY(pontoDeInteresse.PosicaoRealY);
+
+                    HorizontalAlignment posicaoTexto = posicaoX == 0 ? HorizontalAlignment.Left : HorizontalAlignment.Right;
+                    canvas.DrawString(pontoDeInteresse.Nome, posicaoX, posicaoY, posicaoTexto);
+                    canvas.FillCircle(posicaoX, posicaoY, 10);
+                }
+            }
 
 
             foreach (var beacon in ConfiguracaoBeacon.BeaconsConhecidos)

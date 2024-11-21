@@ -4,19 +4,20 @@
              x:Class="PrototipoMapeamentoAPP.PaginaPrincipal"
              Title="PaginaPrincipal">
     <VerticalStackLayout>
-        <!--<SearchBar x:Name="searchBar"
-                       Placeholder="Digite para buscar..."
-                       SearchButtonPressed="OnSearchButtonPressed"
-                       TextChanged="OnSearchTextChanged" />-->
+        <SearchBar x:Name="searchBar"
+               Placeholder="Digite para buscar..."
+               TextChanged="AoDigitarNaBarraDePesquisa" />
 
-        <!--<ListView x:Name="listView">
+        <ListView x:Name="listaPontosDeInteresse"
+              ItemsSource="{Binding PontosFiltrados}"
+              ItemSelected="AoSelecionarPontoDeInteresse">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding}" />
+                    <TextCell Text="{Binding Nome}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>-->
-        
+        </ListView>
+
         <GraphicsView x:Name="canvasView" HeightRequest="800" WidthRequest="400"/>
     </VerticalStackLayout>
 </ContentPage>
