@@ -1,6 +1,5 @@
-﻿using PrototipoMapeamentoAPP.Model;
 ﻿using PrototipoMapeamentoAPP.Configuracao;
-
+﻿
 namespace PrototipoMapeamentoAPP
 {
     public class MapaDrawable : IDrawable
@@ -21,6 +20,13 @@ namespace PrototipoMapeamentoAPP
 
             canvas.FillColor = Colors.Red;
             canvas.FillCircle(ConfiguracaoDoMapa.PosicaoDoUsuarioX, ConfiguracaoDoMapa.PosicaoDoUsuarioY, 10);
+
+
+            foreach(var beacon in ConfiguracaoBeacon.BeaconsConhecidos)
+            {
+                canvas.FillColor = Colors.Green;
+                canvas.FillCircle((float)beacon.PosicaoNoMapa.X, (float)beacon.PosicaoNoMapa.Y, 10);
+            }
         }
 
         //public void DesenharNo(No no)

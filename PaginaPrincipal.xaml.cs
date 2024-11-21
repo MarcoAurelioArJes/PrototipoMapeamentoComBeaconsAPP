@@ -2,7 +2,6 @@ using PrototipoMapeamentoAPP.Model;
 using PrototipoMapeamentoAPP.Services;
 using System.Diagnostics;
 using PrototipoMapeamentoAPP.Configuracao;
-using PrototipoMapeamentoAPP.Services;
 
 namespace PrototipoMapeamentoAPP;
 public partial class PaginaPrincipal : ContentPage
@@ -11,7 +10,7 @@ public partial class PaginaPrincipal : ContentPage
     private Mapa _mapa;
     private AEstrelaService aEstrelaService;
     private readonly BeaconService _beaconService;
-
+    private Task _iniciarEscaneamento;
     public PaginaPrincipal()
     {
         InitializeComponent();
@@ -23,11 +22,11 @@ public partial class PaginaPrincipal : ContentPage
         _beaconService = new BeaconService();
     }
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
 
-        await IniciarScan();
+        _iniciarEscaneamento = IniciarScan();
     }
 
     private async Task IniciarScan()
@@ -35,17 +34,22 @@ public partial class PaginaPrincipal : ContentPage
         while (true)
         {
             await _beaconService.AtualizarInformacoesDosBeacons();
+
+            AtualizarPosicaoDoUsuario();
         }
     }
 
-    private void AoClicarEmAtualizarPosicaoDoUsuario(object sender, EventArgs e)
+    private void AtualizarPosicaoDoUsuario()
     {
+        var posicaoDoUsuario1 = AlgoritmoDosMinimosQuadradosPonderados.EstimarPosicao(ConfiguracaoBeacon.BeaconsConhecidos);
 
-        foreach (var beacon in ConfiguracaoBeacon.BeaconsConhecidos)
+        ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoDoUsuario1.X;
+        ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoDoUsuario1.Y;
+
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            ConfiguracaoDoMapa.PosicaoDoUsuarioX = float.Parse(PosicaoX.Text);
-            ConfiguracaoDoMapa.PosicaoDoUsuarioY = float.Parse(PosicaoY.Text);
-        }
+            canvasView.Invalidate();
+        });
 
         //_mapa.ExibirMapa();
         _mapa.LimparMapa();
@@ -81,7 +85,5 @@ public partial class PaginaPrincipal : ContentPage
         //        drawable?.DesenharNo(no);
         //    }
         //}
-
-        canvasView.Invalidate();
     }
 }
