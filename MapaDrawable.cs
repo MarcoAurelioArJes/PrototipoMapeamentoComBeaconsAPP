@@ -9,7 +9,7 @@ namespace PrototipoMapeamentoAPP
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
             var retangulo = new RectF(0, 0, ConfiguracaoDoMapa.LarguraMapa, ConfiguracaoDoMapa.AlturaMapa);
-            canvas.FillColor = Colors.DarkGray;
+            canvas.FillColor = Colors.White;
             canvas.FillRectangle(retangulo);
 
             var retanguloObstaculo = new RectF(ConfiguracaoDoMapa.PosicaoXObstaculo,
@@ -17,7 +17,7 @@ namespace PrototipoMapeamentoAPP
                                                ConfiguracaoDoMapa.LarguraObstaculo,
                                                ConfiguracaoDoMapa.AlturaObstaculo);
 
-            canvas.FillColor = Colors.Black;
+            canvas.FillColor = Colors.LightGray;
             canvas.FillRectangle(retanguloObstaculo);
 
             canvas.FillColor = Colors.Red;

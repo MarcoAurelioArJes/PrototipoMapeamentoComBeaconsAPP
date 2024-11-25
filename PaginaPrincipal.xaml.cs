@@ -27,6 +27,7 @@ public partial class PaginaPrincipal : ContentPage
         _aEstrelaService = new AEstrelaService(_mapa);
         _beaconService = new BeaconService();
         _pontoDeInteresseRepository = new PontoDeInteresseRepository();
+        PontosFiltrados = new ObservableCollection<PontoDeInteresse>();
 
         BindingContext = this;
     }
@@ -82,7 +83,7 @@ public partial class PaginaPrincipal : ContentPage
         Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
         Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
 
-        
+        //A*
         if (ConfiguracaoDoMapa.DestinoX != 0 || ConfiguracaoDoMapa.DestinoY != 0)
             EncontrarMelhorCaminho();
 
@@ -122,6 +123,18 @@ public partial class PaginaPrincipal : ContentPage
         }
     }
 
+    private void LimparPesquisa(object sender, EventArgs e)
+    {
+        searchBar.Text = string.Empty;
+
+        if (ConfiguracaoDoMapa.Caminho != null)
+            ConfiguracaoDoMapa.Caminho.Clear();
+
+        if (PontosFiltrados != null && PontosFiltrados.Count > 0)
+                PontosFiltrados.Clear();
+    }
+
+
     private void AoSelecionarPontoDeInteresse(object sender, SelectedItemChangedEventArgs e)
     {
         if (e.SelectedItem is PontoDeInteresse pontoSelecionado)
@@ -148,6 +161,11 @@ public partial class PaginaPrincipal : ContentPage
     }
     private async void AbrirTelaDeCadastro(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new PaginaCadastro());
+        await Navigation.PushAsync(new PaginaCadastro(_mapa));
+    }
+    
+    private async void AbrirTelaDeAlteracao(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PaginaAlteracao(_mapa)));
     }
 }

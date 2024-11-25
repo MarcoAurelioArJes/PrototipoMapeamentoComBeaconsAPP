@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrototipoMapeamentoAPP.PaginaAlteracao"
+             Title="Editar pontos de Interesse">
+
+    <StackLayout Padding="10" Spacing="10">
+
+
+        <!-- Tabela para edição -->
+        <CollectionView ItemsSource="{Binding PontosDeInteresse}" Margin="0,10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <!-- Nome -->
+                        <Entry Text="{Binding Nome}" 
+                               Placeholder="Nome" 
+                               HorizontalOptions="FillAndExpand" />
+
+                        <!-- Descrição -->
+                        <Entry Text="{Binding PosicaoRealX}" 
+                               Placeholder="Posiçao X" 
+                               HorizontalOptions="FillAndExpand" />
+
+                        <Entry Text="{Binding PosicaoRealY}" 
+                               Placeholder="Posição Y" 
+                               HorizontalOptions="FillAndExpand" />
+
+                        <!-- Botão de excluir -->
+                        <Button Text="Excluir" 
+                                BackgroundColor="Red" 
+                                TextColor="White"
+                                Clicked="ExcluirPonto" 
+                                Margin="5"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botão para salvar alterações -->
+        <Button Text="Salvar Alterações" 
+                BackgroundColor="Green"
+                TextColor="White"
+                Clicked="SalvarAlteracoes" />
+
+        <Button Text="Voltar" Clicked="VoltarTelaInicial" Margin="10"/>
+    </StackLayout>
+</ContentPage>
