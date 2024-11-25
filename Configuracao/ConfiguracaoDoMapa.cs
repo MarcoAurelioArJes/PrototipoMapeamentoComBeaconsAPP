@@ -20,8 +20,8 @@ namespace PrototipoMapeamentoAPP.Configuracao
 
         //public static float LarguraReal = 25f;
         //public static float AlturaReal = 30f;
-        public static float LarguraReal = 20f;
-        public static float AlturaReal = 60f;
+        public static float LarguraReal = 15f;
+        public static float AlturaReal = 30f;
 
         public static float ResolucaoHorizontal => LarguraReal / LarguraMapa;
         public static float ResolucaoVertical => AlturaReal / AlturaMapa;

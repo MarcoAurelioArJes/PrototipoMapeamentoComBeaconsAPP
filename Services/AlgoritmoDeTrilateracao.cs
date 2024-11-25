@@ -1,4 +1,5 @@
-﻿using PrototipoMapeamentoAPP.Configuracao;
+﻿using MathNet.Numerics;
+using PrototipoMapeamentoAPP.Configuracao;
 using PrototipoMapeamentoAPP.Model;
 
 namespace PrototipoMapeamentoAPP.Services
@@ -27,14 +28,18 @@ namespace PrototipoMapeamentoAPP.Services
                                 - beacon2.PosicaoReal.X * beacon2.PosicaoReal.X - beacon2.PosicaoReal.Y * beacon2.PosicaoReal.Y
                                 + beacon3.PosicaoReal.X * beacon3.PosicaoReal.X + beacon3.PosicaoReal.Y * beacon3.PosicaoReal.Y;
 
-            double coordenadaXDesconhecida = (constanteC * coeficienteE - constanteF * coeficienteB)
-                                             / (coeficienteE * coeficienteA - coeficienteB * coeficienteD);
+            double dividendoXDesconhecida = (constanteC * coeficienteE - constanteF * coeficienteB);
+            double divisorXDesconhecida = (coeficienteE * coeficienteA - coeficienteB * coeficienteD);
 
-            double coordenadaYDesconhecida = (constanteC * coeficienteD - coeficienteA * constanteF)
-                                             / (coeficienteB * coeficienteD - coeficienteA * coeficienteE);
+            double coordenadaXDesconhecida = dividendoXDesconhecida / (dividendoXDesconhecida.IsFinite() ? 1 : dividendoXDesconhecida);
 
-            return new Point(ConfiguracaoDoMapa.ConverterMetrosParaPixelsX(coordenadaXDesconhecida),
-                             ConfiguracaoDoMapa.ConverterMetrosParaPixelsY(coordenadaYDesconhecida));
+            double dividendoYDesconhecida = (constanteC * coeficienteD - coeficienteA * constanteF);
+            double divisorYDesconhecida = (coeficienteB * coeficienteD - coeficienteA * coeficienteE);
+
+            double coordenadaYDesconhecida = dividendoYDesconhecida / (divisorYDesconhecida.IsFinite() ? 1 : divisorYDesconhecida);
+
+            return new Point(ConfiguracaoDoMapa.ConverterMetrosParaPixelsX(Math.Abs(coordenadaXDesconhecida)),
+                             ConfiguracaoDoMapa.ConverterMetrosParaPixelsY(Math.Abs(coordenadaYDesconhecida)));
         }
     }
 }

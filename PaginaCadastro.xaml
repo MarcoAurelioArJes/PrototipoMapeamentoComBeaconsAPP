@@ -5,8 +5,8 @@
              Title="PaginaCadastro">
     <VerticalStackLayout>
         <Entry x:Name="NomePonto" Placeholder="Nome do Ponto de Interesse"/>
-        <Entry x:Name="PosicaoX" Placeholder="Posição X no Mapa" Keyboard="Numeric"/>
-        <Entry x:Name="PosicaoY" Placeholder="Posição Y no Mapa" Keyboard="Numeric"/>
+        <Entry x:Name="PosicaoX" Placeholder="Posição X Real" Keyboard="Numeric"/>
+        <Entry x:Name="PosicaoY" Placeholder="Posição Y Real" Keyboard="Numeric"/>
 
         <Button Text="Salvar Ponto" Clicked="SalvarPonto" Margin="10"/>
         <Button Text="Voltar" Clicked="VoltarTelaInicial" Margin="10"/>

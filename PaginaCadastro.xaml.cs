@@ -22,8 +22,8 @@ public partial class PaginaCadastro : ContentPage
             double posicaoX = double.TryParse(PosicaoX.Text, out double posicaoXCast) ? posicaoXCast : throw new Exception("Valor para Posição X é inválido.");
             double posicaoY = double.TryParse(PosicaoY.Text, out double posicaoYCast) ? posicaoYCast : throw new Exception("Valor para Posição Y é inválido.");
             var destino = _mapa.ObterDestinoXY(posicaoX / ConfiguracaoDoMapa.DivisorPixelParaMatriz, posicaoY / ConfiguracaoDoMapa.DivisorPixelParaMatriz);
-            pontoInteresse.PosicaoRealX = destino.X;
-            pontoInteresse.PosicaoRealY = destino.Y;
+            pontoInteresse.PosicaoRealX = destino.X * ConfiguracaoDoMapa.DivisorPixelParaMatriz;
+            pontoInteresse.PosicaoRealY = destino.Y * ConfiguracaoDoMapa.DivisorPixelParaMatriz;
 
              _pontoDeInteresseRepository.Criar(pontoInteresse);
 

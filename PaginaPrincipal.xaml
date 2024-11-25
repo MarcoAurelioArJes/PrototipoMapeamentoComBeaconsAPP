@@ -5,30 +5,31 @@
              Title="Mapa"
              BackgroundColor="LightGray">
 
-    <Grid>
-        <GraphicsView x:Name="canvasView" HeightRequest="800" WidthRequest="400"/>
-        <ListView x:Name="listaPontosDeInteresse"
+    <VerticalStackLayout Padding="10" VerticalOptions="Start">
+        <Grid>
+            <GraphicsView x:Name="canvasView" HeightRequest="800" WidthRequest="400"/>
+            <ListView x:Name="listaPontosDeInteresse"
                   VerticalOptions="Start" Margin="10,80,10,10"
                   ItemsSource="{Binding PontosFiltrados}"
                   ItemSelected="AoSelecionarPontoDeInteresse"
                  >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Nome}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Frame VerticalOptions="Start" HorizontalOptions="Center"
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Nome}" TextColor="Black"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Frame VerticalOptions="Start" HorizontalOptions="Center"
                BackgroundColor="Gray" Opacity="0.8"
                HeightRequest="60" WidthRequest="300" CornerRadius="30" BorderColor="Transparent" Margin="10"
                HasShadow="False">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <SearchBar x:Name="searchBar"
+                    <SearchBar x:Name="searchBar"
                            Grid.Column="0"
                            Placeholder="Digite para buscar..."
                            Margin="4"
@@ -39,7 +40,7 @@
                            HeightRequest="50"
                            TextChanged="AoDigitarNaBarraDePesquisa" />
 
-                <Button Grid.Column="2" Text="X"
+                    <Button Grid.Column="2" Text="X"
                         BackgroundColor="Transparent"
                         TextColor="White"
                         FontSize="15"
@@ -47,9 +48,9 @@
                         WidthRequest="35"
                         Clicked="LimparPesquisa"
                         VerticalOptions="End" />
-            </Grid>
-        </Frame>
-        <Button Text="Alt"
+                </Grid>
+            </Frame>
+            <Button Text="Alt"
             BackgroundColor="Gray"
             TextColor="White"
             CornerRadius="10"
@@ -57,10 +58,10 @@
             WidthRequest="40"
             HorizontalOptions="End"
             VerticalOptions="End"
-            Margin="10,10,10,60"
+            Margin="80,90,80,120"
             Clicked="AbrirTelaDeAlteracao" />
 
-        <Button Text="+"
+            <Button Text="+"
             BackgroundColor="Gray"
             TextColor="White"
             CornerRadius="10"
@@ -68,10 +69,10 @@
             WidthRequest="40"
             HorizontalOptions="End"
             VerticalOptions="End"
-            Margin="10"
+            Margin="40,40,40,120"
             Clicked="AbrirTelaDeCadastro" />
 
-        <!--<Button Text="Alt"
+            <!--<Button Text="Alt"
             BackgroundColor="Gray"
             TextColor="White"
             CornerRadius="10"
@@ -94,7 +95,8 @@
             Clicked="AbrirTelaDeCadastro" />-->
 
 
-    </Grid>
+        </Grid>
+    </VerticalStackLayout>
 </ContentPage>
 
 

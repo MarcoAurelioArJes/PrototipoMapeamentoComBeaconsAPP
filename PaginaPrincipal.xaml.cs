@@ -65,17 +65,17 @@ public partial class PaginaPrincipal : ContentPage
 
             AtualizarPosicaoDoUsuario();
 
-            await Task.Delay(2000);
+            await Task.Delay(800);
         }
     }
 
     private void AtualizarPosicaoDoUsuario()
-    {
-        var beaconsProximos = ConfiguracaoBeacon.BeaconsConhecidos.OrderByDescending(c => c.RSSIAtual).ToList();
+   {
+        var beaconsProximos = ConfiguracaoBeacon.BeaconsConhecidos.OrderByDescending(c => c.Distancia).ToList();
         var posicaoUsuarioCalculado = AlgoritmoDeTrilateracao.Trilaterar(beaconsProximos);
 
-        ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoUsuarioCalculado.Value.X;
-        ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoUsuarioCalculado.Value.Y;
+        //ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoUsuarioCalculado.Value.X;
+        //ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoUsuarioCalculado.Value.Y;
 
         Debug.WriteLine($"BeaconTAG: {beaconsProximos[0].BeaconTAG} RSSI: {beaconsProximos[0].RSSIAtual} DISTANCIA: {beaconsProximos[0].Distancia}");
         Debug.WriteLine($"BeaconTAG: {beaconsProximos[1].BeaconTAG} RSSI: {beaconsProximos[1].RSSIAtual} DISTANCIA: {beaconsProximos[1].Distancia}");
@@ -104,11 +104,13 @@ public partial class PaginaPrincipal : ContentPage
         if (!_mapa.EstaDentroDoObstaculo(posicaoDoUsuarioAEstrela.X, posicaoDoUsuarioAEstrela.Y) && !_mapa.EstaDentroDoObstaculo(destino.X, destino.Y) &&
             _mapa.ValidarPosicao(posicaoDoUsuarioAEstrela.X, posicaoDoUsuarioAEstrela.Y) && _mapa.ValidarPosicao(destino.X, destino.Y))
         {
-            var caminho = _aEstrelaService.EncontrarCaminho2(posicaoDoUsuarioAEstrela, destino);
+            var caminho = _aEstrelaService.EncontrarCaminho(posicaoDoUsuarioAEstrela, destino);
 
             if (caminho != null)
             {
                 ConfiguracaoDoMapa.Caminho = caminho.Select(c => (c.X, c.Y)).ToList();
+                ConfiguracaoDoMapa.PosicaoDoUsuarioX = caminho[1].X;
+                ConfiguracaoDoMapa.PosicaoDoUsuarioY = caminho[1].Y;
             }
         }
     }
@@ -166,6 +168,6 @@ public partial class PaginaPrincipal : ContentPage
     
     private async void AbrirTelaDeAlteracao(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new PaginaAlteracao(_mapa)));
+        await Navigation.PushAsync(new PaginaAlteracao(_mapa));
     }
 }
