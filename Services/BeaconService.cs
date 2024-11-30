@@ -46,10 +46,10 @@ namespace PrototipoMapeamentoAPP.Services
 
         public async Task AtualizarInformacoesDosBeacons()
         {
-            var mock = true;
+            var mock = false;
             if (mock)
             {
-                if (count == 20)
+                if (count == 15)
                     count = 0;
 
                 count++;

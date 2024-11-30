@@ -27,6 +27,7 @@ public partial class PaginaPrincipal : ContentPage
         _aEstrelaService = new AEstrelaService(_mapa);
         _beaconService = new BeaconService();
         _pontoDeInteresseRepository = new PontoDeInteresseRepository();
+        PontosFiltrados = new ObservableCollection<PontoDeInteresse>();
 
         BindingContext = this;
     }
@@ -64,17 +65,17 @@ public partial class PaginaPrincipal : ContentPage
 
             AtualizarPosicaoDoUsuario();
 
-            await Task.Delay(2000);
+            await Task.Delay(800);
         }
     }
 
     private void AtualizarPosicaoDoUsuario()
-    {
-        var beaconsProximos = ConfiguracaoBeacon.BeaconsConhecidos.OrderByDescending(c => c.RSSIAtual).ToList();
+   {
+        var beaconsProximos = ConfiguracaoBeacon.BeaconsConhecidos.OrderByDescending(c => c.Distancia).ToList();
         var posicaoUsuarioCalculado = AlgoritmoDeTrilateracao.Trilaterar(beaconsProximos);
 
-        ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoUsuarioCalculado.Value.X;
-        ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoUsuarioCalculado.Value.Y;
+        //ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoUsuarioCalculado.Value.X;
+        //ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoUsuarioCalculado.Value.Y;
 
         Debug.WriteLine($"BeaconTAG: {beaconsProximos[0].BeaconTAG} RSSI: {beaconsProximos[0].RSSIAtual} DISTANCIA: {beaconsProximos[0].Distancia}");
         Debug.WriteLine($"BeaconTAG: {beaconsProximos[1].BeaconTAG} RSSI: {beaconsProximos[1].RSSIAtual} DISTANCIA: {beaconsProximos[1].Distancia}");
@@ -82,7 +83,7 @@ public partial class PaginaPrincipal : ContentPage
         Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
         Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
 
-        
+        //A*
         if (ConfiguracaoDoMapa.DestinoX != 0 || ConfiguracaoDoMapa.DestinoY != 0)
             EncontrarMelhorCaminho();
 
@@ -103,11 +104,13 @@ public partial class PaginaPrincipal : ContentPage
         if (!_mapa.EstaDentroDoObstaculo(posicaoDoUsuarioAEstrela.X, posicaoDoUsuarioAEstrela.Y) && !_mapa.EstaDentroDoObstaculo(destino.X, destino.Y) &&
             _mapa.ValidarPosicao(posicaoDoUsuarioAEstrela.X, posicaoDoUsuarioAEstrela.Y) && _mapa.ValidarPosicao(destino.X, destino.Y))
         {
-            var caminho = _aEstrelaService.EncontrarCaminho2(posicaoDoUsuarioAEstrela, destino);
+            var caminho = _aEstrelaService.EncontrarCaminho(posicaoDoUsuarioAEstrela, destino);
 
             if (caminho != null)
             {
                 ConfiguracaoDoMapa.Caminho = caminho.Select(c => (c.X, c.Y)).ToList();
+                ConfiguracaoDoMapa.PosicaoDoUsuarioX = caminho[1].X;
+                ConfiguracaoDoMapa.PosicaoDoUsuarioY = caminho[1].Y;
             }
         }
     }
@@ -121,6 +124,18 @@ public partial class PaginaPrincipal : ContentPage
             PontosFiltrados.Add(ponto);
         }
     }
+
+    private void LimparPesquisa(object sender, EventArgs e)
+    {
+        searchBar.Text = string.Empty;
+
+        if (ConfiguracaoDoMapa.Caminho != null)
+            ConfiguracaoDoMapa.Caminho.Clear();
+
+        if (PontosFiltrados != null && PontosFiltrados.Count > 0)
+                PontosFiltrados.Clear();
+    }
+
 
     private void AoSelecionarPontoDeInteresse(object sender, SelectedItemChangedEventArgs e)
     {
@@ -149,7 +164,12 @@ public partial class PaginaPrincipal : ContentPage
 
     private async void AbrirTelaDeCadastro(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new PaginaCadastro());
+        await Navigation.PushAsync(new PaginaCadastro(_mapa));
+    }
+    
+    private async void AbrirTelaDeAlteracao(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PaginaAlteracao(_mapa));
     }
 
     private async void AbrirTelaDeCalibracao(object sender, EventArgs e)

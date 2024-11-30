@@ -23,8 +23,8 @@ namespace PrototipoMapeamentoAPP.Model
         public void AdicionarRSSIAtual(double rssi)
         {
             _rssis.Add(rssi);
-            if (_rssis.Count > 60)
-                _rssis.RemoveRange(0, 59);
+            //if (_rssis.Count > 60)
+            //    _rssis.RemoveRange(0, 59);
         }
 
         public double ObterMediaRSSIsAtuais() => _rssis.Count > 0 ? _rssis.Average() : RSSIAtual;

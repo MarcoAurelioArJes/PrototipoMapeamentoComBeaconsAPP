@@ -9,16 +9,16 @@ namespace PrototipoMapeamentoAPP
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
             var retangulo = new RectF(0, 0, ConfiguracaoDoMapa.LarguraMapa, ConfiguracaoDoMapa.AlturaMapa);
-            canvas.FillColor = Colors.DarkGray;
+            canvas.FillColor = Colors.White;
             canvas.FillRectangle(retangulo);
 
-            var retanguloObstaculo = new RectF(ConfiguracaoDoMapa.PosicaoXObstaculo,
-                                               ConfiguracaoDoMapa.PosicaoYObstaculo,
-                                               ConfiguracaoDoMapa.LarguraObstaculo,
-                                               ConfiguracaoDoMapa.AlturaObstaculo);
+            //var retanguloObstaculo = new RectF(ConfiguracaoDoMapa.PosicaoXObstaculo,
+            //                                   ConfiguracaoDoMapa.PosicaoYObstaculo,
+            //                                   ConfiguracaoDoMapa.LarguraObstaculo,
+            //                                   ConfiguracaoDoMapa.AlturaObstaculo);
 
-            canvas.FillColor = Colors.Black;
-            canvas.FillRectangle(retanguloObstaculo);
+            //canvas.FillColor = Colors.LightGray;
+            //canvas.FillRectangle(retanguloObstaculo);
 
             canvas.FillColor = Colors.Red;
             canvas.FillCircle(ConfiguracaoDoMapa.PosicaoDoUsuarioX, ConfiguracaoDoMapa.PosicaoDoUsuarioY, 10);
@@ -27,19 +27,6 @@ namespace PrototipoMapeamentoAPP
             if (ConfiguracaoDoMapa.PontosDeInteresse.Count > 0)
             {
                 foreach (var pontoDeInteresse in ConfiguracaoDoMapa.PontosDeInteresse)
-                {
-                    canvas.FillColor = Colors.DeepPink;
-                    float posicaoX = (float)ConfiguracaoDoMapa.ConverterMetrosParaPixelsX(pontoDeInteresse.PosicaoRealX);
-                    float posicaoY = (float)ConfiguracaoDoMapa.ConverterMetrosParaPixelsY(pontoDeInteresse.PosicaoRealY);
-
-                    HorizontalAlignment posicaoTexto = posicaoX == 0 ? HorizontalAlignment.Left : HorizontalAlignment.Right;
-                    canvas.DrawString(pontoDeInteresse.Nome, posicaoX, posicaoY, posicaoTexto);
-                    canvas.FillCircle(posicaoX, posicaoY, 10);
-                }
-            }
-            else
-            {
-                foreach (var pontoDeInteresse in PontosDeInteresseMock.ObterPontosDeInteresse())
                 {
                     canvas.FillColor = Colors.DeepPink;
                     float posicaoX = (float)ConfiguracaoDoMapa.ConverterMetrosParaPixelsX(pontoDeInteresse.PosicaoRealX);

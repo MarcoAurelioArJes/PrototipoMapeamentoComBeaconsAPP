@@ -2,8 +2,143 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PrototipoMapeamentoAPP.PaginaPrincipal"
-             Title="PaginaPrincipal">
-    <VerticalStackLayout>
+             Title="Mapa"
+             BackgroundColor="LightGray">
+
+    <VerticalStackLayout Padding="10" VerticalOptions="Start">
+        <Grid>
+            <GraphicsView x:Name="canvasView" HeightRequest="800" WidthRequest="400"/>
+            <ListView x:Name="listaPontosDeInteresse"
+                  VerticalOptions="Start" Margin="10,80,10,10"
+                  ItemsSource="{Binding PontosFiltrados}"
+                  ItemSelected="AoSelecionarPontoDeInteresse"
+                 >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Nome}" TextColor="Black"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Frame VerticalOptions="Start" HorizontalOptions="Center"
+               BackgroundColor="Gray" Opacity="0.8"
+               HeightRequest="60" WidthRequest="300" CornerRadius="30" BorderColor="Transparent" Margin="10"
+               HasShadow="False">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <SearchBar x:Name="searchBar"
+                           Grid.Column="0"
+                           Placeholder="Digite para buscar..."
+                           Margin="4"
+                           BackgroundColor="Transparent"
+                           TextColor="White"
+                           PlaceholderColor="#BBBBBB"
+                           FontSize="14"
+                           HeightRequest="50"
+                           TextChanged="AoDigitarNaBarraDePesquisa" />
+
+                    <Button Grid.Column="2" Text="X"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="15"
+                        HeightRequest="35"
+                        WidthRequest="35"
+                        Clicked="LimparPesquisa"
+                        VerticalOptions="End" />
+                </Grid>
+            </Frame>
+            <Button Text="Alt"
+            BackgroundColor="Gray"
+            TextColor="White"
+            CornerRadius="10"
+            HeightRequest="40"
+            WidthRequest="40"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="80,90,80,120"
+            Clicked="AbrirTelaDeAlteracao" />
+
+            <Button Text="+"
+            BackgroundColor="Gray"
+            TextColor="White"
+            CornerRadius="10"
+            HeightRequest="40"
+            WidthRequest="40"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="40,40,40,120"
+            Clicked="AbrirTelaDeCadastro" />
+
+            <!--<Button Text="Alt"
+            BackgroundColor="Gray"
+            TextColor="White"
+            CornerRadius="10"
+            HeightRequest="40"
+            WidthRequest="40"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="10"
+            Clicked="AbrirTelaDeCadastro" />   
+        
+        <Button Text="+"
+            BackgroundColor="Gray"
+            TextColor="White"
+            CornerRadius="10"
+            HeightRequest="40"
+            WidthRequest="40"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="10"
+            Clicked="AbrirTelaDeCadastro" />-->
+
+
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>
+
+
+<!-- Tentativa 01  -->
+   <!--<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrototipoMapeamentoAPP.PaginaPrincipal"
+             Title="Mapa"
+             BackgroundColor="White">
+    <Grid>
+        --><!-- GraphicsView ocupando toda a tela --><!--
+        <GraphicsView x:Name="canvasView" />
+
+        --><!-- SearchBar sobreposta ao GraphicsView --><!--
+        <VerticalStackLayout Padding="10" VerticalOptions="Start">
+            <SearchBar x:Name="searchBar"
+                       Placeholder="Digite para buscar..."
+                       TextChanged="AoDigitarNaBarraDePesquisa"
+                       BackgroundColor="Gray"
+                       Opacity="0.8" 
+                       Margin="10"
+                       Border=""
+                       />
+            <ListView x:Name="listaPontosDeInteresse"
+                      ItemsSource="{Binding PontosFiltrados}"
+                      ItemSelected="AoSelecionarPontoDeInteresse">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Nome}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
+-->
+
+
+
+
+<!--Antiga-->
+    <!--<VerticalStackLayout>
         <SearchBar x:Name="searchBar"
                Placeholder="Digite para buscar..."
                TextChanged="AoDigitarNaBarraDePesquisa" />
