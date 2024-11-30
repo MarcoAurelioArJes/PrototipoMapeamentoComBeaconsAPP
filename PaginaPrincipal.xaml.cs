@@ -20,7 +20,7 @@ public partial class PaginaPrincipal : ContentPage
     public PaginaPrincipal()
     {
         InitializeComponent();
-
+        
         canvasView.Drawable = new MapaDrawable();
 
         _mapa = new Mapa();
