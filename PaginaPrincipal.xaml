@@ -158,5 +158,10 @@
                 HorizontalOptions="Center"
                 VerticalOptions="End"
                 Clicked="AbrirTelaDeCadastro"/>
-    </VerticalStackLayout>-->
+        <Button Text="Calibrar Beacons"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Clicked="AbrirTelaDeCalibracao"/>
 
+    </VerticalStackLayout>
+</ContentPage>

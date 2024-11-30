@@ -161,6 +161,7 @@ public partial class PaginaPrincipal : ContentPage
             DisplayAlert("Ponto de Interesse", $"Ponto de interesse não encontrado", "OK");
         }
     }
+
     private async void AbrirTelaDeCadastro(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new PaginaCadastro(_mapa));
@@ -169,5 +170,10 @@ public partial class PaginaPrincipal : ContentPage
     private async void AbrirTelaDeAlteracao(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new PaginaAlteracao(_mapa));
+    }
+
+    private async void AbrirTelaDeCalibracao(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PaginaCalibracao());
     }
 }
