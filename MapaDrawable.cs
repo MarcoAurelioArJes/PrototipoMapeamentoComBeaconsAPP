@@ -12,13 +12,13 @@ namespace PrototipoMapeamentoAPP
             canvas.FillColor = Colors.White;
             canvas.FillRectangle(retangulo);
 
-            //var retanguloObstaculo = new RectF(ConfiguracaoDoMapa.PosicaoXObstaculo,
-            //                                   ConfiguracaoDoMapa.PosicaoYObstaculo,
-            //                                   ConfiguracaoDoMapa.LarguraObstaculo,
-            //                                   ConfiguracaoDoMapa.AlturaObstaculo);
+            var retanguloObstaculo = new RectF(ConfiguracaoDoMapa.PosicaoXObstaculo,
+                                               ConfiguracaoDoMapa.PosicaoYObstaculo,
+                                               ConfiguracaoDoMapa.LarguraObstaculo,
+                                               ConfiguracaoDoMapa.AlturaObstaculo);
 
-            //canvas.FillColor = Colors.LightGray;
-            //canvas.FillRectangle(retanguloObstaculo);
+            canvas.FillColor = Colors.LightGray;
+            canvas.FillRectangle(retanguloObstaculo);
 
             canvas.FillColor = Colors.Red;
             canvas.FillCircle(ConfiguracaoDoMapa.PosicaoDoUsuarioX, ConfiguracaoDoMapa.PosicaoDoUsuarioY, 10);

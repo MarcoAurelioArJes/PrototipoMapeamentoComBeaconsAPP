@@ -13,21 +13,21 @@ namespace PrototipoMapeamentoAPP.Configuracao
         //TXPOWER 4
         private static Dictionary<string, (double MediaRSSIPadrao, int ADVInterval, Point PosicaoNoMapa)> ConfiguracaoTXPowerEm4 => new()
         {
-            { UUID_BEACON_A, new (-50, 500, new Point(0, 0)) },
-            { UUID_BEACON_B, new (-58, 500, new Point(ConfiguracaoDoMapa.LarguraMapa, 0)) },
+            { UUID_BEACON_A, new (-50, 500, new Point(ConfiguracaoDoMapa.PosicaoXObstaculo, ConfiguracaoDoMapa.PosicaoYObstaculo)) },
+            { UUID_BEACON_B, new (-58, 500, new Point(ConfiguracaoDoMapa.LarguraObstaculo + ConfiguracaoDoMapa.PosicaoXObstaculo, ConfiguracaoDoMapa.PosicaoYObstaculo)) },
             { UUID_BEACON_C, new(-50, 500, new Point(ConfiguracaoDoMapa.LarguraMapa / 2, ConfiguracaoDoMapa.AlturaMapa / 2)) },
-            { UUID_BEACON_D, new(-58.5, 500, new Point(ConfiguracaoDoMapa.AlturaMapa, 0)) },
-            { UUID_BEACON_E, new(-49, 500, new Point(ConfiguracaoDoMapa.LarguraMapa, ConfiguracaoDoMapa.AlturaMapa)) }
+            { UUID_BEACON_D, new(-58.5, 500, new Point(ConfiguracaoDoMapa.PosicaoXObstaculo, ConfiguracaoDoMapa.AlturaObstaculo + ConfiguracaoDoMapa.PosicaoYObstaculo)) },
+            { UUID_BEACON_E, new(-49, 500, new Point(ConfiguracaoDoMapa.LarguraObstaculo + ConfiguracaoDoMapa.PosicaoXObstaculo, ConfiguracaoDoMapa.AlturaObstaculo + ConfiguracaoDoMapa.PosicaoYObstaculo)) }
         };
 
         //TXPOWER 6
         private static Dictionary<string, (double MediaRSSIPadrao, int ADVInterval, Point PosicaoNoMapa)> ConfiguracaoTXPowerEm6 => new()
         {
-            { UUID_BEACON_A, new (-44.5, 500, new Point(0, 0)) },
-            { UUID_BEACON_B, new (-55.5, 500, new Point(ConfiguracaoDoMapa.LarguraMapa, 0)) },
+            { UUID_BEACON_A, new (-44.5, 500, new Point(ConfiguracaoDoMapa.PosicaoXObstaculo, ConfiguracaoDoMapa.PosicaoYObstaculo)) },
+            { UUID_BEACON_B, new (-55.5, 500, new Point(ConfiguracaoDoMapa.LarguraObstaculo + ConfiguracaoDoMapa.PosicaoXObstaculo, ConfiguracaoDoMapa.PosicaoYObstaculo)) },
             { UUID_BEACON_C, new (-45, 500, new Point(ConfiguracaoDoMapa.LarguraMapa / 2, ConfiguracaoDoMapa.AlturaMapa / 2)) },
-            { UUID_BEACON_D, new (-52, 500, new Point(0, ConfiguracaoDoMapa.AlturaMapa)) },
-            { UUID_BEACON_E, new (-45, 500, new Point(ConfiguracaoDoMapa.LarguraMapa, ConfiguracaoDoMapa.AlturaMapa)) }
+            { UUID_BEACON_D, new (-52, 500, new Point(ConfiguracaoDoMapa.PosicaoXObstaculo, ConfiguracaoDoMapa.AlturaObstaculo + ConfiguracaoDoMapa.PosicaoYObstaculo)) },
+            { UUID_BEACON_E, new (-45, 500, new Point(ConfiguracaoDoMapa.LarguraObstaculo + ConfiguracaoDoMapa.PosicaoXObstaculo, ConfiguracaoDoMapa.AlturaObstaculo + ConfiguracaoDoMapa.PosicaoYObstaculo)) }
         };
         public static (double MediaRSSIPadrao, int ADVInterval, Point PosicaoNoMapa) ObterConfiguracaoDoBeaconPorUUID(string uuid)
         {
