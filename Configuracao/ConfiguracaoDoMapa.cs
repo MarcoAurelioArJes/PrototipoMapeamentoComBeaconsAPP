@@ -8,7 +8,7 @@ namespace PrototipoMapeamentoAPP.Configuracao
         private static double AlturaTela => DeviceDisplay.MainDisplayInfo.Height <= 0 ? 800 : 700;
 
         public static float PosicaoDoUsuarioX { get; set; } = 300f;
-        public static float PosicaoDoUsuarioY { get; set; } = 50f;
+        public static float PosicaoDoUsuarioY { get; set; } = 600f;
 
         public static float LarguraMapa => LarguraTela <= 400 ? (float)LarguraTela : 400f;
         public static float AlturaMapa => AlturaTela <= 800 ? (float)AlturaTela : 800f;
