@@ -4,8 +4,8 @@ namespace PrototipoMapeamentoAPP.Configuracao
 {
     public static class ConfiguracaoDoMapa
     {
-        private static double LarguraTela => DeviceDisplay.MainDisplayInfo.Width <= 0 ? 400 : 400;
-        private static double AlturaTela => DeviceDisplay.MainDisplayInfo.Height <= 0 ? 800 : 700;
+        private static double LarguraTela => DeviceDisplay.MainDisplayInfo.Width <= 0 ? 400 : DeviceDisplay.MainDisplayInfo.Width;
+        private static double AlturaTela => DeviceDisplay.MainDisplayInfo.Height <= 0 ? 800 : DeviceDisplay.MainDisplayInfo.Height;
 
         public static float PosicaoDoUsuarioX { get; set; } = 300f;
         public static float PosicaoDoUsuarioY { get; set; } = 600f;
@@ -18,8 +18,6 @@ namespace PrototipoMapeamentoAPP.Configuracao
         public static float PosicaoXObstaculo => LarguraObstaculo / 2;
         public static float PosicaoYObstaculo => AlturaObstaculo / 2;
 
-        //public static float LarguraReal = 25f;
-        //public static float AlturaReal = 30f;
         public static float LarguraReal = 21f;
         public static float AlturaReal = 55f;
 
