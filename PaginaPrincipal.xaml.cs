@@ -36,7 +36,7 @@ public partial class PaginaPrincipal : ContentPage
     {
         base.OnAppearing();
 
-        IniciarPontosDeInteresse();
+        //IniciarPontosDeInteresse();
         _iniciarEscaneamento = IniciarScan();
     }
 
@@ -71,16 +71,18 @@ public partial class PaginaPrincipal : ContentPage
 
     private void AtualizarPosicaoDoUsuario()
    {
-        var beaconsProximos = ConfiguracaoBeacon.BeaconsConhecidos.OrderByDescending(c => c.Distancia).ToList();
+        var beaconsProximos = ConfiguracaoBeacon.BeaconsConhecidos.OrderBy(c => c.Distancia).ToList();
         var posicaoUsuarioCalculado = AlgoritmoDeTrilateracao.Trilaterar(beaconsProximos);
 
-        //ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoUsuarioCalculado.Value.X;
-        //ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoUsuarioCalculado.Value.Y;
+        ConfiguracaoDoMapa.PosicaoDoUsuarioX = (float)posicaoUsuarioCalculado.Value.X;
+        ConfiguracaoDoMapa.PosicaoDoUsuarioY = (float)posicaoUsuarioCalculado.Value.Y;
 
-        Debug.WriteLine($"BeaconTAG: {beaconsProximos[0].BeaconTAG} RSSI: {beaconsProximos[0].RSSIAtual} DISTANCIA: {beaconsProximos[0].Distancia}");
-        Debug.WriteLine($"BeaconTAG: {beaconsProximos[1].BeaconTAG} RSSI: {beaconsProximos[1].RSSIAtual} DISTANCIA: {beaconsProximos[1].Distancia}");
-        Debug.WriteLine($"BeaconTAG: {beaconsProximos[2].BeaconTAG} RSSI: {beaconsProximos[2].RSSIAtual} DISTANCIA: {beaconsProximos[2].Distancia}");
-        Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
+        foreach (var beacondevice in beaconsProximos)
+        {   
+            Debug.WriteLine($"BeaconTAG: {beacondevice.BeaconTAG} RSSI: {beacondevice.RSSIAtual} DISTANCIA: {beacondevice.Distancia}");
+            beacondevice.PrintarCalculoRSSI();
+        }
+
         Debug.WriteLine($"Posição Atualizada: X={ConfiguracaoDoMapa.PosicaoDoUsuarioX}, Y={ConfiguracaoDoMapa.PosicaoDoUsuarioY}");
 
         //A*
@@ -104,13 +106,13 @@ public partial class PaginaPrincipal : ContentPage
         if (!_mapa.EstaDentroDoObstaculo(posicaoDoUsuarioAEstrela.X, posicaoDoUsuarioAEstrela.Y) && !_mapa.EstaDentroDoObstaculo(destino.X, destino.Y) &&
             _mapa.ValidarPosicao(posicaoDoUsuarioAEstrela.X, posicaoDoUsuarioAEstrela.Y) && _mapa.ValidarPosicao(destino.X, destino.Y))
         {
-            var caminho = _aEstrelaService.EncontrarCaminho(posicaoDoUsuarioAEstrela, destino);
+            var caminho = _aEstrelaService.EncontrarCaminho2(posicaoDoUsuarioAEstrela, destino);
 
             if (caminho != null)
             {
                 ConfiguracaoDoMapa.Caminho = caminho.Select(c => (c.X, c.Y)).ToList();
-                ConfiguracaoDoMapa.PosicaoDoUsuarioX = caminho[1].X;
-                ConfiguracaoDoMapa.PosicaoDoUsuarioY = caminho[1].Y;
+                //ConfiguracaoDoMapa.PosicaoDoUsuarioX = caminho[1].X;
+                //ConfiguracaoDoMapa.PosicaoDoUsuarioY = caminho[1].Y;
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using PrototipoMapeamentoAPP.Configuracao;
+using System.Diagnostics;
 
 namespace PrototipoMapeamentoAPP.Model
 {
@@ -25,6 +26,11 @@ namespace PrototipoMapeamentoAPP.Model
             _rssis.Add(rssi);
             //if (_rssis.Count > 60)
             //    _rssis.RemoveRange(0, 59);
+        }
+
+        public void PrintarCalculoRSSI()
+        {
+            Debug.WriteLine($"Math.Pow(10, ({_rssi0calibrado} - {ObterMediaRSSIsAtuais()}) / (10 * {_expoentePerdaDeCaminho}))");
         }
 
         public double ObterMediaRSSIsAtuais() => _rssis.Count > 0 ? _rssis.Average() : RSSIAtual;

@@ -70,30 +70,30 @@ namespace PrototipoMapeamentoAPP.Services
                     var status = await Permissions.RequestAsync<Permissions.Bluetooth>();
                     if (status == PermissionStatus.Granted)
                     {
-                        if (_beacons.Count > 0)
-                        {
-                            foreach (var device in _beacons)
-                            {
-                                await device.UpdateRssiAsync();
+                        //if (_beacons.Count > 0)
+                        //{
+                        //    foreach (var device in _beacons)
+                        //    {
+                        //        await device.UpdateRssiAsync();
 
-                                var beacon = ConfiguracaoBeacon.BeaconsConhecidos.FirstOrDefault(b => b.UUID == device.Id.ToString());
-                                if (beacon != null)
-                                {
-                                    beacon.RSSIAtual = device.Rssi;
-                                    beacon.AdicionarRSSIAtual(beacon.RSSIAtual);
-                                }
+                        //        var beacon = ConfiguracaoBeacon.BeaconsConhecidos.FirstOrDefault(b => b.UUID == device.Id.ToString());
+                        //        if (beacon != null)
+                        //        {
+                        //            beacon.RSSIAtual = device.Rssi;
+                        //            beacon.AdicionarRSSIAtual(beacon.RSSIAtual);
+                        //        }
 
-                                continue;
-                            }
+                        //        continue;
+                        //    }
 
-                            return;
-                        }
+                        //    return;
+                        //}
 
                         await _adapter.StartScanningForDevicesAsync();
-                        foreach (var device in _beacons)
-                        {
-                            await _adapter.ConnectToDeviceAsync(device);
-                        }
+                        //foreach (var device in _beacons)
+                        //{
+                        //    await _adapter.ConnectToDeviceAsync(device);
+                        //}
                     }
                 }
                 else

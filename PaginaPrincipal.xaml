@@ -72,6 +72,12 @@
             Margin="40,40,40,120"
             Clicked="AbrirTelaDeCadastro" />
 
+            <Button Text="Calibrar Beacons"
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            Margin="40,40,40,120"
+            Clicked="AbrirTelaDeCalibracao"/>
+
         </Grid>
     </VerticalStackLayout>
 </ContentPage>
